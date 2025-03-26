@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace='com.abs.utility.api.upload.mapper.FileInfoMapper'>
+    <insert id="addFileInfo">
+        INSERT INTO file_info
+        (
+            file_id,
+            upload_id,
+            service_id,
+            user_id,
+            domain_info,
+            path_info,
+            file_name,
+            saved_name,
+            ext_name,
+            file_size,
+            mime_type,
+            width,
+            height,
+            status,
+        <if test="deleted != null">
+            deleted,
+        </if>
+        <if test="expireDate != null">
+            expire_date,
+        </if>
+            channel,
+            upload_date
+        )
+        VALUES
+        (
+            #{fileId},
+            #{uploadId},
+            #{serviceId},
+            #{userId},
+            #{domainInfo},
+            #{pathInfo},
+            #{fileName},
+            #{savedName},
+            #{extName},
+            #{fileSize},
+            #{mimeType},
+            #{width},
+            #{height},
+            #{status},
+        <if test="deleted != null">
+            #{deleted},
+        </if>
+        <if test="expireDate != null">
+            #{expireDate},
+        </if>
+            #{channel},
+            GETDATE()
+        )
+    </insert>
+
+    <select id="findNextFileId" resultType="java.lang.String">
+        DECLARE @date datetime;
+        DECLARE @log_id VARCHAR(100);
+        SET @date = GETDATE();
+    	SET @log_id = CONCAT(
+            CONVERT(VARCHAR(8), @date, 112)
+            , REPLACE(CONVERT(VARCHAR(8), @date, 8),':','')
+            , RIGHT(concat('0000000000', NEXT VALUE FOR datahub_seq), 6)
+        )
+        SELECT @log_id
+    </select>
+
+</mapper>

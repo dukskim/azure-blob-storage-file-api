@@ -1,0 +1,93 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.6'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.abs.utility'
+//version = 'SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	/**
+	 * mssql
+	 */
+	implementation 'com.microsoft.sqlserver:mssql-jdbc'
+
+	/**
+	 * mybatis
+	 */
+	// https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+
+	/**
+	 * log4jdbc
+	 */
+	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+	/**
+	 * validation
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.6'
+
+	/**
+	 * actuator
+	 */
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	/**
+	 * swagger
+	 */
+	// https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	/**
+	 * json
+	 */
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	/**
+	 * gson
+	 */
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation 'com.google.code.gson:gson:2.9.0'
+
+	/**
+	 * logback
+	 */
+	implementation 'net.logstash.logback:logstash-logback-encoder:7.1.1'
+
+	/**
+	 * Azure storage blob
+	 */
+	implementation 'com.azure:azure-storage-blob:12.22.2'
+//	implementation 'commons-fileupload:commons-fileupload:1.3.1'
+
+	/**
+	 * Image Resize marvin
+	 */
+	implementation 'com.github.downgoon:marvin:1.5.5'
+	implementation 'com.github.downgoon:MarvinPlugins:1.5.5'
+
+	// Spring test >> Use MockMultipartFile
+	implementation 'org.springframework:spring-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

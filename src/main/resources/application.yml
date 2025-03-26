@@ -1,0 +1,195 @@
+spring:
+  profiles:
+    active: local
+  mvc: #Swagger
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER # STS > 소문자 시 (ant_path_matcher), problems > error 표시됨, 단순히 대문자로 변경했음 > 이슈 해결됨
+#    hiddenmethod:
+#      filter:
+#        enabled: true
+  servlet:
+    multipart:
+      maxFileSize: 600MB
+      maxRequestSize: 600MB
+
+server:
+  port: 8080
+
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*/*.xml
+
+---
+# local environment
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:sqlserver://127.0.0.1:1433;databaseName=absdb;encrypt=true;trustServerCertificate=true
+    username: account
+    password: account!@
+
+logging:
+  #config: classpath:logback-spring-dev.xml
+  level:
+    root: INFO
+    com:
+      zaxxer:
+        hikari: INFO
+      abs:
+        utility: DEBUG
+    javax:
+      sql:
+        DataSource: OFF
+    jdbc:
+      audit: OFF
+      resultset: OFF
+      resultsettable: INFO  #SQL 결과 데이터 Table을 로그로 남긴다.
+      sqlonly: OFF     #SQL만 로그로 남긴다.
+      sqltiming: INFO    #SQL과 소요시간을 표기한다.
+      connection : OFF  # 커넥션 확인가능
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: INFO
+    io:
+      lettuce:
+        core:
+          protocol: ERROR
+
+azure:
+  storage:
+    blob:
+      connection-string: DefaultEndpointsProtocol=https;AccountName=testdev;AccountKey=ghowghowihof;EndpointSuffix=core.windows.net
+      container-name: download1
+    cdn:
+      url: https://localhost:8080
+service:
+  name: abs-util
+  domain: 127.0.0.1:8080
+  protocol: http
+
+---
+# dev environment
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:sqlserver://127.0.0.1:1433;databaseName=absdb;encrypt=true;trustServerCertificate=true
+    username: account
+    password: account!@
+
+
+logging:
+  config: classpath:logback-spring-${spring.profiles.active}.xml
+  level:
+    com:
+      zaxxer:
+        hikari: INFO
+    javax:
+      sql:
+        DataSource: OFF
+    jdbc:
+      audit: OFF
+      resultset: OFF
+      resultsettable: INFO  #SQL 결과 데이터 Table을 로그로 남긴다.
+      sqlonly: OFF     #SQL만 로그로 남긴다.
+      sqltiming: INFO    #SQL과 소요시간을 표기한다.
+      connection : OFF  # 커넥션 확인가능
+    org:
+      hibernate:
+        SQL: ERROR
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: INFO
+    io:
+      lettuce:
+        core:
+          protocol: ERROR
+
+azure:
+  storage:
+    blob:
+      connection-string: DefaultEndpointsProtocol=https;AccountName=testdev;AccountKey=ghowghowihof;EndpointSuffix=core.windows.net
+      container-name: download1
+    cdn:
+      url: https://localhost:8080
+service:
+  name: abs-util
+  domain: 127.0.0.1:8080
+  protocol: http
+
+---
+# prod environment
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:sqlserver://127.0.0.1:1433;databaseName=absdb;encrypt=true;trustServerCertificate=true
+    username: account
+    password: account!@
+
+logging:
+  config: classpath:logback-spring-${spring.profiles.active}.xml
+  level:
+    com:
+      zaxxer:
+        hikari: INFO
+    javax:
+      sql:
+        DataSource: OFF
+    jdbc:
+      audit: OFF
+      resultset: OFF
+      resultsettable: INFO  #SQL 결과 데이터 Table을 로그로 남긴다.
+      sqlonly: OFF     #SQL만 로그로 남긴다.
+      sqltiming: INFO    #SQL과 소요시간을 표기한다.
+      connection : OFF  # 커넥션 확인가능
+    org:
+      hibernate:
+        SQL: ERROR
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: INFO
+    io:
+      lettuce:
+        core:
+          protocol: ERROR
+
+azure:
+  storage:
+    blob:
+      connection-string: DefaultEndpointsProtocol=https;AccountName=testprod;AccountKey=ghowghowihof;EndpointSuffix=core.windows.net
+      container-name: download1
+    cdn:
+      url: https://localhost:8080
+service:
+  name: abs-util
+  domain: 127.0.0.1:8080
+  protocol: http
